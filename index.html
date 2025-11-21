@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EtymoLogos | 深度词源字典</title>
+    <title>LexiconMaster | 深度词源字典</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -71,34 +71,34 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        /* Custom Loader */
-        .quill-loader {
-            width: 48px;
-            height: 48px;
-            border: 3px solid #cba57e;
-            border-radius: 50%;
-            display: inline-block;
-            position: relative;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-        }
-        .quill-loader::after {
-            content: '';  
-            box-sizing: border-box;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+        /* Custom Loader: Flipping Pages */
+        .flipping-pages {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-bottom-color: #805d44;
-            animation: rotation 0.5s linear infinite reverse;
+            position: relative;
+            margin: 0 auto;
         }
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .flipping-pages::before, .flipping-pages::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            left: 10px;
+            background-color: #805d44;
+            animation: pageFlip 1.5s infinite ease-in-out;
+        }
+        .flipping-pages::after {
+            animation-delay: 0.75s;
+            background-color: #cba57e;
+            opacity: 0.7;
+        }
+        @keyframes pageFlip {
+            0% { transform: perspective(100px) rotateX(0deg) rotateY(0deg); }
+            25% { transform: perspective(100px) rotateX(-180deg) rotateY(0deg); }
+            50% { transform: perspective(100px) rotateX(-180deg) rotateY(-180deg); }
+            75% { transform: perspective(100px) rotateX(0deg) rotateY(-180deg); }
+            100% { transform: perspective(100px) rotateX(0deg) rotateY(0deg); }
         }
     </style>
 </head>
@@ -287,7 +287,7 @@
                     <header className="bg-paper-100 border-b border-paper-200 sticky top-0 z-10 backdrop-blur-md bg-opacity-90">
                         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <span className="text-2xl font-serif font-bold text-paper-800 tracking-tight">Etymo<span className="text-paper-600">Logos</span></span>
+                                <span className="text-2xl font-serif font-bold text-paper-800 tracking-tight">Lexicon<span className="text-paper-600">Master</span></span>
                             </div>
                             <button 
                                 onClick={() => setShowKeyModal(true)}
@@ -327,7 +327,7 @@
                         {/* Loading State */}
                         {loading && (
                             <div className="flex flex-col items-center justify-center py-20">
-                                <span className="quill-loader mb-4"></span>
+                                <div className="flipping-pages mb-4"></div>
                                 <p className="text-paper-500 font-serif italic">Consulting the ancient texts...</p>
                             </div>
                         )}
@@ -511,7 +511,7 @@
                             <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 animate-slide-up">
                                 <h2 className="text-2xl font-serif font-bold text-paper-900 mb-4">Library Card Required</h2>
                                 <p className="text-paper-600 mb-6 leading-relaxed">
-                                    To access the infinite library of EtymoLogos, please present your Google Gemini API Key.
+                                    To access the infinite library of LexiconMaster, please present your Google Gemini API Key.
                                     <br/>
                                     <span className="text-xs text-paper-400 block mt-2">The key is stored locally in your browser.</span>
                                 </p>
